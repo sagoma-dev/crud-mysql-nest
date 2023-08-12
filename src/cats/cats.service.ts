@@ -9,26 +9,25 @@ import { Repository } from 'typeorm';
 export class CatsService {
   constructor(
     @InjectRepository(Cat)
-    private readonly catRepository: Repository<Cat>,
+    private readonly catsRepository: Repository<Cat>,
   ) {}
 
   create(createCatDto: CreateCatDto) {
-    return this.catRepository.save(createCatDto);
+    return this.catsRepository.save(createCatDto);
   }
 
   findAll() {
-    return this.catRepository.find();
+    return this.catsRepository.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} cat`;
+    return this.catsRepository.findOneBy({ id });
   }
-
   update(id: number, updateCatDto: UpdateCatDto) {
-    return `This action updates a #${id} cat`;
+    return this.catsRepository.update(id, updateCatDto);
   }
 
   remove(id: number) {
-    return `This action removes a #${id} cat`;
+    return this.catsRepository.softDelete(id);
   }
 }
